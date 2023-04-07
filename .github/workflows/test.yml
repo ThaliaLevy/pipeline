@@ -27,9 +27,8 @@ jobs:
 
     - name: Verify Code Coverage
       run: |
-        COVERAGE=$(grep 'Overall coverage' target/site/jacoco/index.html | sed -e 's/<[^>]*>//g' | awk '{print $4}')
-        if (( COVERAGE < 40 )); then
-          echo "Cobertura de teste abaixo de 40%."
-          echo COVERAGE
+        COVERAGE=$(grep -A 1 '<th>Overall</th>' target/site/jacoco/index.html | tail -n 1 | sed 's/<[^>]*>//g')
+        if (( $(echo "$COVERAGE < 90") )); then
+          echo "Cobertura de teste abaixo de 90%."
           exit 1
         fi
