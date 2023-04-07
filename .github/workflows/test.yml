@@ -33,6 +33,5 @@ jobs:
         if (( $(echo "$COVERAGE < 10" | bc -l) )); then
           echo "Cobertura de teste abaixo de 10%."
           echo $COVERAGE
-          echo COVERAGE
           exit 1
         fi
