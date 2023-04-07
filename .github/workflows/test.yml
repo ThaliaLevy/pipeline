@@ -27,6 +27,7 @@ jobs:
 
     - name: Verify Code Coverage
       run: |
-        echo "coverage = $ {{ steps.jacoco.outputs.coverage }}"
+        echo "coverage = ${{steps.jacoco.outputs.coverage}}"
+        echo $coverage
     
       
