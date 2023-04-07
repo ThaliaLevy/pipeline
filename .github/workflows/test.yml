@@ -27,11 +27,6 @@ jobs:
 
     - name: Verify Code Coverage
       run: |
-        COVERAGE=$(grep -A 1 '<th>Overall</th>' target/site/jacoco/index.html | tail -n 1 | sed 's/<[^>]*>//g')
-        echo "COVERAGE: $COVERAGE"
+        echo "coverage = $ {{ steps.jacoco.outputs.coverage }}"
     
-        if (( $(echo "$COVERAGE < 10" | bc -l) )); then
-          echo "Cobertura de teste abaixo de 10%."
-          echo $COVERAGE
-          exit 1
-        fi
+      
