@@ -70,4 +70,18 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>java-17</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>17</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>17</maven.compiler.source>
+				<maven.compiler.target>17</maven.compiler.target>
+			</properties>
+		</profile>
+	</profiles>
+
 </project>
