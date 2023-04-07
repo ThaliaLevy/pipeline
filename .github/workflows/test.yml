@@ -16,7 +16,7 @@ jobs:
     - name: Setup Java
       uses: actions/setup-java@v2
       with:
-        java-version: '17'
+        java-version: '11'
 
     - name: Build and Test
       run: mvn clean test
@@ -27,7 +27,7 @@ jobs:
     - name: Verify Code Coverage
       run: |
         COVERAGE=$(grep 'Overall coverage' target/site/jacoco/index.html | sed -e 's/<[^>]*>//g' | awk '{print $4}')
-        if (( $(echo "$COVERAGE < 70" | bc -l) )); then
-          echo "Cobertura de teste abaixo de 70%."
+        if (( $(echo "$COVERAGE < 90" | bc -l) )); then
+          echo "Cobertura de teste abaixo de 90%."
           exit 1
         fi
