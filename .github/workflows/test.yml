@@ -30,5 +30,6 @@ jobs:
         COVERAGE=$(grep 'Overall coverage' target/site/jacoco/index.html | sed -e 's/<[^>]*>//g' | awk '{print $4}')
         if (( COVERAGE < 40 )); then
           echo "Cobertura de teste abaixo de 40%."
+          echo COVERAGE
           exit 1
         fi
