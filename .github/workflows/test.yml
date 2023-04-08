@@ -27,25 +27,12 @@ jobs:
 
     - name: Verify Code Coverage
       run: |
-        COVERAGE=$(awk '/Total/{print $NF}' target/site/jacoco/jacoco.xml | cut -d "." -f 1)
-        COVERAGE2=$(grep -A 1 '(?<=<td>Total<\/td>\n<td class="bar">[0-9]+ of [0-9]+<\/td>\n<td class="ctr2">)[0-9]+(?=%<\/td>)' target/site/jacoco/index.html | tail -n 1 | cut -d '>' -f 2 | cut -d '<' -f 1)
-        COVERAGE3=$(awk -F'[<>]' '/report type="INSTRUCTION"/{print $3}' target/site/jacoco/index.html)
-        COVERAGE4=$(awk -F'[<>]' '/tfoot/{getline;getline;getline; print $5}' target/site/jacoco/index.html | tr -d '%')
-        COVERAGE5=$(awk '/<tfoot>/{getline;getline;getline;print $2}' target/site/jacoco/index.html | tr -d '%')
-        COVERAGE6=$(grep -A 1 'Total' target/site/jacoco/index.html | tail -n 1 | sed 's/[^0-9]*//g')
         COVERAGE7=$(grep -oP '(?<=<td class="ctr2">)[0-9]+(?=%</td>)' target/site/jacoco/index.html)      
-        echo COVERAGE $COVERAGE
-        echo COVERAGE2 $COVERAGE2
-        echo COVERAGE3 $COVERAGE3
-        echo COVERAGE4 $COVERAGE4
-        echo COVERAGE5 $COVERAGE5
-        echo COVERAGE6 $COVERAGE6
         echo COVERAGE7 $COVERAGE7
-
-        #if [ "$COVERAGE" -ge "70" ]; then
-        #  echo "Code coverage is $COVERAGE%. Test passed!"
-        #else
-        #  echo "Code coverage is $COVERAGE%. Test failed!"
-        #exit 1
-        #fi
+        if [ "$COVERAGE" -ge "70" ]; then
+          echo "Code coverage is $COVERAGE%. Test passed!"
+        else
+          echo "Code coverage is $COVERAGE%. Test failed!"
+        exit 1
+        fi
         
