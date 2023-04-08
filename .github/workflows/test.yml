@@ -27,7 +27,12 @@ jobs:
 
     - name: Verify Code Coverage
       run: |
-        COVERAGE=$(grep -A 1 '(?<=<td>Total<\/td>\n<td class="bar">[0-9]+ of [0-9]+<\/td>\n<td class="ctr2">)[0-9]+(?=%<\/td>)' target/site/jacoco/index.html | tail -n 1 | cut -d '>' -f 2 | cut -d '<' -f 1)
+        COVERAGE=$(awk '/Total/{print $NF}' target/site/jacoco/jacoco.xml | cut -d "." -f 1)
+        COVERAGE2=$(grep -A 1 '(?<=<td>Total<\/td>\n<td class="bar">[0-9]+ of [0-9]+<\/td>\n<td class="ctr2">)[0-9]+(?=%<\/td>)' target/site/jacoco/index.html | tail -n 1 | cut -d '>' -f 2 | cut -d '<' -f 1)
+        COVERAGE3=$(awk -F'[<>]' '/report type="INSTRUCTION"/{print $3}' target/site/jacoco/index.html)
+        echo COVERAGE
+        echo COVERAGE2
+        echo COVERAGE3
         if [ "$COVERAGE" -ge "70" ]; then
           echo "Code coverage is $COVERAGE%. Test passed!"
         else
