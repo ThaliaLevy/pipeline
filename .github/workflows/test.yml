@@ -27,7 +27,7 @@ jobs:
 
     - name: Verify Code Coverage
       run: |
-        COVERAGE=$(grep -A 1 'Total' target/site/jacoco/index.html | tail -n 1 | cut -d '>' -f 2 | cut -d '<' -f 1)
+        COVERAGE=$(awk '/<tfoot>/{getline;getline;getline;print $2}' target/site/jacoco/index.html | tr -d '%')
         if [ "$COVERAGE" -ge "70" ]; then
           echo "Code coverage is $COVERAGE%. Test passed!"
         else
