@@ -27,7 +27,11 @@ jobs:
 
     - name: Verify Code Coverage
       run: |
-        echo "coverage = ${{steps.jacoco.outputs.coverage}}"
-        echo $coverage
-    
-      
+        COVERAGE=$(awk '/Total/{print $NF}' target/site/jacoco/jacoco.xml | cut -d "." -f 1)
+        if [ "$COVERAGE" -ge "70" ]; then
+          echo "Code coverage is $COVERAGE%. Test passed!"
+        else
+          echo "Code coverage is $COVERAGE%. Test failed!"
+        exit 1
+        fi
+        
