@@ -30,9 +30,11 @@ jobs:
         COVERAGE=$(awk '/Total/{print $NF}' target/site/jacoco/jacoco.xml | cut -d "." -f 1)
         COVERAGE2=$(grep -A 1 '(?<=<td>Total<\/td>\n<td class="bar">[0-9]+ of [0-9]+<\/td>\n<td class="ctr2">)[0-9]+(?=%<\/td>)' target/site/jacoco/index.html | tail -n 1 | cut -d '>' -f 2 | cut -d '<' -f 1)
         COVERAGE3=$(awk -F'[<>]' '/report type="INSTRUCTION"/{print $3}' target/site/jacoco/index.html)
+        COVERAGE4=$(awk -F'[<>]' '/tfoot/{getline;getline;getline; print $5}' target/site/jacoco/index.html | tr -d '%')
         echo COVERAGE $COVERAGE
         echo COVERAGE2 $COVERAGE2
         echo COVERAGE3 $COVERAGE3
+        echo COVERAGE4 $COVERAGE4
 
         #if [ "$COVERAGE" -ge "70" ]; then
         #  echo "Code coverage is $COVERAGE%. Test passed!"
