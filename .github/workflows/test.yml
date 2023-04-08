@@ -33,12 +33,14 @@ jobs:
         COVERAGE4=$(awk -F'[<>]' '/tfoot/{getline;getline;getline; print $5}' target/site/jacoco/index.html | tr -d '%')
         COVERAGE5=$(awk '/<tfoot>/{getline;getline;getline;print $2}' target/site/jacoco/index.html | tr -d '%')
         COVERAGE6=$(grep -A 1 'Total' target/site/jacoco/index.html | tail -n 1 | sed 's/[^0-9]*//g')
+        COVERAGE7=$(grep -oP '(?<=<td class="ctr2">)[0-9]+(?=%</td>)' target/site/jacoco/index.html)      
         echo COVERAGE $COVERAGE
         echo COVERAGE2 $COVERAGE2
         echo COVERAGE3 $COVERAGE3
         echo COVERAGE4 $COVERAGE4
         echo COVERAGE5 $COVERAGE5
         echo COVERAGE6 $COVERAGE6
+        echo COVERAGE7 $COVERAGE7
 
         #if [ "$COVERAGE" -ge "70" ]; then
         #  echo "Code coverage is $COVERAGE%. Test passed!"
